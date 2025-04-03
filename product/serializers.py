@@ -14,6 +14,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
   
 class ProductImageSerializer(serializers.ModelSerializer):
+    image=serializers.ImageField()
     class Meta:
         model = ProductImage
         fields = ['id','image']
