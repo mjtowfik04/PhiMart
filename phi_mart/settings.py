@@ -1,25 +1,20 @@
-from pathlib import Path
-from datetime import timedelta
 from decouple import config
+from datetime import timedelta
+from pathlib import Path
 import cloudinary
+import cloudinary.uploader
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
+SECRET_KEY = 'django-insecure-26g2vmgxa3p#03gf#&2+q5z#c4takhk%#9vs41drr=)0d66d#2'
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_-sw+995f4t48rwyxucty93nmor3r&u0(secce*$8+36=xcv3-'
+DEBUG = False
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = [".vercel.app", '127.0.0.1']
+ALLOWED_HOSTS = [".vercel.app",'127.0.0.1']
 AUTH_USER_MODEL = 'users.User'
 
-# Application definition
 
 INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",
@@ -29,19 +24,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'drf_yasg',
-    'django_filters',
     'rest_framework',
     'djoser',
+    'django_filters',
     'api',
-    'product',
     'users',
     'order',
-    "debug_toolbar",
+    'product',
+    'debug_toolbar',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -53,6 +48,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'phi_mart.urls'
+
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
 
 TEMPLATES = [
     {
@@ -72,11 +73,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'phi_mart.wsgi.app'
 
-INTERNAL_IPS = [
-    # ...
-    "127.0.0.1",
-    # ...
-]
+
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -86,18 +83,16 @@ INTERNAL_IPS = [
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': config('dbname'),
-        'USER': config('user'),
+        'USER': config ('user'),
         'PASSWORD': config('password'),
         'HOST': config('host'),
         'PORT': config('port')
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -121,17 +116,6 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-# Configuration for cloudinary storage
-cloudinary.config(
-    cloud_name=config('cloud_name'),
-    api_key=config('cloudinary_api_key'),
-    api_secret=config('api_secret'),
-    secure=True
-)
-
-# Media storage setting
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -145,13 +129,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / "staticfiles"
-# STATIC_FILES_DIR = BASE_DIR / 'static'
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
-
 MEDIA_URL = '/media/'
+STATICFILES_STORAGE="whitenoise.storage.CompressedStaticFilesStorage"
+
 
 MEDIA_ROOT = BASE_DIR / 'media'
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -159,38 +143,45 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
-    'COERCE_DECIMAL_TO_STRING': False,
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+       
     ),
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ]
 }
 
 SIMPLE_JWT = {
-    'AUTH_HEADER_TYPES': ('JWT',),
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+   'AUTH_HEADER_TYPES': ('JWT',),
+   "ACCESS_TOKEN_LIFETIME": timedelta(days=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
 
 DJOSER = {
-    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': 'activate/{uid}/{token}',
-    'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS': {
         'user_create': 'users.serializers.UserCreateSerializer',
         'current_user': 'users.serializers.UserSerializer'
+        
     },
 }
 
 SWAGGER_SETTINGS = {
-    'SECURITY_DEFINITIONS': {
-        'Bearer': {
+   'SECURITY_DEFINITIONS': {
+      'Bearer': {
             'type': 'apiKey',
             'name': 'Authorization',
-            'in': 'header',
-            'description': 'Enter your JWT token in the format: `JWT <your_token>`'
-        }
-    }
+            'in': 'header'
+      }
+   }
 }
 
+
+
+
+# Configuration       
+cloudinary.config( 
+    cloud_name = config('cloud_name'), 
+    api_key = config('cloudinary_api_key'), 
+    api_secret = config('api_secret'), 
+    secure=True
+)
+
+DEFAULT_FILE_STORAGE='cloudinary_storage.storage.MediaCloudinaryStorage'
