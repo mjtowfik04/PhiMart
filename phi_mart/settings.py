@@ -2,7 +2,6 @@ from decouple import config
 from datetime import timedelta
 from pathlib import Path
 import cloudinary
-import cloudinary.uploader
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-26g2vmgxa3p#03gf#&2+q5z#c4takhk%#9vs41drr=)0d66d#2'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [".vercel.app",'127.0.0.1']
 AUTH_USER_MODEL = 'users.User'
@@ -27,6 +26,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'djoser',
     'django_filters',
+    'corsheaders',
     'api',
     'users',
     'order',
@@ -36,6 +36,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
@@ -157,6 +158,10 @@ SIMPLE_JWT = {
 
 DJOSER = {
     'SERIALIZERS': {
+        'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+        'USERNAME_RESET_CONFIRM_URL': 'username/reset/confirm/{uid}/{token}',
+        'ACTIVATION_URL': 'activate/{uid}/{token}',
+        'SEND_ACTIVATION_EMAIL': True,
         'user_create': 'users.serializers.UserCreateSerializer',
         'current_user': 'users.serializers.UserSerializer'
         
@@ -185,3 +190,16 @@ cloudinary.config(
 )
 
 DEFAULT_FILE_STORAGE='cloudinary_storage.storage.MediaCloudinaryStorage'
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+EMAIL_PORT = config('EMAIL_PORT')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+CORS_ALLOWED_ORIGINS = [
+   ' http://localhost:5173'
+]
