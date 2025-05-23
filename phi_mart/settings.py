@@ -187,7 +187,6 @@ SWAGGER_SETTINGS = {
 
 
 
-# Configuration       
 cloudinary.config( 
     cloud_name = config('cloud_name'), 
     api_key = config('cloudinary_api_key'), 
