@@ -3,12 +3,6 @@ from decouple import config
 from datetime import timedelta
 from pathlib import Path
 import cloudinary
-import psycopg2
-from dotenv import load_dotenv
-import os
-
-# Load environment variables from .env
-load_dotenv()
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
