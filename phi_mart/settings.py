@@ -209,4 +209,5 @@ FRONTEND_URL = config("FRONTEND_URL")
 
 CORS_ALLOWED_ORIGINS = [
    ' http://localhost:5173'
+   'https://phi-mart-client-rho.vercel.app'
 ]
