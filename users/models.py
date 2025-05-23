@@ -10,7 +10,7 @@ class User(AbstractUser):
     address = models.TextField(blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
 
-    USERNAME_FIELD = 'email'  # Use email instead of username
+    USERNAME_FIELD = 'email'  
     REQUIRED_FIELDS = []
 
     objects = CustomUserManager()

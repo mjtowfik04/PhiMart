@@ -1,7 +1,14 @@
+
 from decouple import config
 from datetime import timedelta
 from pathlib import Path
 import cloudinary
+import psycopg2
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env
+load_dotenv()
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -84,14 +91,16 @@ WSGI_APPLICATION = 'phi_mart.wsgi.app'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+from decouple import config
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('dbname'),
-        'USER': config ('user'),
-        'PASSWORD': config('password'),
-        'HOST': config('host'),
-        'PORT': config('port',default='5432')
+        'NAME': 'postgres',
+        'USER': 'postgres.lvsvlmpzbwwmsypmrjws',
+        'PASSWORD':'4DYL566tSpJQbQP0',
+        'HOST': 'aws-0-ap-southeast-1.pooler.supabase.com',
+        'PORT': '5432',
     }
 }
 
