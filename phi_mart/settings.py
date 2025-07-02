@@ -209,5 +209,5 @@ FRONTEND_URL = config("FRONTEND_URL")
 
 CORS_ALLOWED_ORIGINS = [
    ' http://localhost:5173',
-   'https://phimart-client-self.vercel.app'
+   'https://myshopbooks.vercel.app'
 ]
