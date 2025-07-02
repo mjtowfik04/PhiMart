@@ -3,7 +3,7 @@
         "model": "product.category",
         "pk": 1,
         "fields": {
-            "name": "Electronics",
+            "name": "programming Books",
             "description": "Devices and gadgets"
         }
     },
@@ -11,7 +11,7 @@
         "model": "product.category",
         "pk": 2,
         "fields": {
-            "name": "Fashion",
+            "name": "story ",
             "description": "Clothing and accessories"
         }
     },
@@ -19,7 +19,7 @@
         "model": "product.category",
         "pk": 3,
         "fields": {
-            "name": "Home Appliances",
+            "name": "Academy Books",
             "description": "Appliances for home use"
         }
     },
@@ -27,7 +27,7 @@
         "model": "product.category",
         "pk": 4,
         "fields": {
-            "name": "Books",
+            "name": "historical Books",
             "description": "Books and educational materials"
         }
     },
